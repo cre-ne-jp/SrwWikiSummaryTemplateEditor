@@ -1,0 +1,24 @@
+{
+  "@metadata": {
+    "authors": [
+      "ocha"
+    ]
+  },
+  "srwwikisummarytemplateeditor-extensionname": "SRW Wiki Summary Template Editor",
+  "srwwikisummarytemplateeditor-desc": "Helps editing summary templates on Super Robot Wars Wiki.",
+  "summarytemplateeditor": "Summary Template Editor",
+  "summarytemplateeditor-summary": "On this page, you can generate the wiki markup of a summary template for this wiki easily.",
+  "srwste-input-section": "== Input ==",
+  "srwste-load-template-section": "=== Load an existing template ===",
+  "srwste-load-template-description": "To edit an existing template, select the template page from the following field.",
+  "srwste-template-page": "Template page",
+  "srwste-load": "Load",
+  "srwste-item-list-section": "=== Item list ===",
+  "srwste-enter-items": "Enter the items in the text box below, one item per line. You can specify the label with the following format:",
+  "srwste-item-format": "<pre>item name,label</pre>",
+  "srwste-separate-items": "To separate items, insert a line beginning with <code>----</code> between items.",
+  "srwste-template-name": "Template name",
+  "srwste-items": "Items",
+  "srwste-generate": "Generate",
+  "srwste-output-section": "== Output =="
+}

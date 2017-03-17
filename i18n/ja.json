@@ -1,0 +1,24 @@
+{
+  "@metadata": {
+    "authors": [
+      "ocha"
+    ]
+  },
+  "srwwikisummarytemplateeditor-extensionname": "スーパーロボット大戦Wiki 概要テンプレートエディタ",
+  "srwwikisummarytemplateeditor-desc": "スーパーロボット大戦Wikiの概要テンプレートの編集を支援します。",
+  "summarytemplateeditor": "概要テンプレートエディタ",
+  "summarytemplateeditor-summary": "このページでは、概要テンプレートのウィキマークアップを簡単に生成することができます。",
+  "srwste-input-section": "== 入力 ==",
+  "srwste-load-template-section": "=== 既存のテンプレートの読み込み ===",
+  "srwste-load-template-description": "既存のテンプレートを編集するには、以下の欄からテンプレートページを選択してください。",
+  "srwste-template-page": "テンプレートページ",
+  "srwste-load": "読み込み",
+  "srwste-item-list-section": "=== 項目の一覧 ===",
+  "srwste-enter-items": "下のテキストボックスに、1 行に 1 つずつ項目を入力してください。以下の書式を使ってラベルを指定することもできます：",
+  "srwste-item-format": "<pre>項目名,ラベル</pre>",
+  "srwste-separate-items": "項目を区切るには、項目の間に <code>----</code> で始まる行を挿入してください。",
+  "srwste-template-name": "テンプレート名",
+  "srwste-items": "項目",
+  "srwste-generate": "生成",
+  "srwste-output-section": "== 出力 =="
+}

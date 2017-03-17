@@ -1,0 +1,45 @@
+{
+  "name": "SRW Wiki Summary Template Editor",
+  "namemsg": "srwwikisummarytemplateeditor-extensionname",
+  "version": "0.0.1",
+  "author": "ocha",
+  "url": "https://srw.wiki.cre.jp/wiki/",
+  "descriptionmsg": "srwwikisummarytemplateeditor-desc",
+  "license-name": "MIT",
+  "type": "specialpage",
+  "requires": {
+    "MediaWiki": ">= 1.25.0"
+  },
+  "AutoloadClasses": {
+    "SpecialSummaryTemplateEditor": "SrwWikiSummaryTemplateEditor_body.php",
+    "SrwSummaryTemplate": "includes/SrwSummaryTemplate.php",
+    "SrwSummaryTemplateItem": "includes/SrwSummaryTemplateItem.php",
+    "SrwSummaryTemplateParser": "includes/SrwSummaryTemplateParser.php"
+  },
+  "SpecialPages": {
+    "SummaryTemplateEditor": "SpecialSummaryTemplateEditor"
+  },
+  "MessagesDirs": {
+    "SummaryTemplateEditor": [
+      "i18n"
+    ]
+  },
+  "ExtensionMessagesFiles": {
+    "SummaryTemplateEditorAlias": "i18n/SummaryTemplateEditor.i18n.alias.php"
+  },
+  "ResourceModules": {
+    "ext.srwWikiSummaryTemplateEditor": {
+      "dependencies": [
+        "mediawiki.jqueryMsg"
+      ],
+      "scripts": [
+        "modules/ext.srwWikiSummaryTemplateEditor.js"
+      ]
+    }
+  },
+  "ResourceFileModulePaths": {
+    "localBasePath": "",
+    "remoteExtPath": "SrwWikiSummaryTemplateEditor"
+  },
+  "manifest_version": 1
+}
