@@ -23,3 +23,11 @@ git clone https://github.com/cre-ne-jp/SrwWikiSummaryTemplateEditor.git
 ```
 wfLoadExtension('SrwWikiSummaryTemplateEditor');
 ```
+
+## ライセンス
+
+[MIT License](LICENSE)
+
+## 制作
+
+&copy; ocha（[@ochaochaocha3](https://github.com/ochaochaocha3)）
