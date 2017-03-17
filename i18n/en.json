@@ -7,7 +7,7 @@
   "srwwikisummarytemplateeditor-extensionname": "SRW Wiki Summary Template Editor",
   "srwwikisummarytemplateeditor-desc": "Helps editing summary templates on Super Robot Wars Wiki.",
   "summarytemplateeditor": "Summary Template Editor",
-  "summarytemplateeditor-summary": "On this page, you can generate the wiki markup of a summary template for this wiki easily.",
+  "summarytemplateeditor-summary": "On this page, you can generate the source of a [[:Category:概要テンプレート|summary template]] for this wiki easily.",
   "srwste-input-section": "== Input ==",
   "srwste-load-template-section": "=== Load an existing template ===",
   "srwste-load-template-description": "To edit an existing template, select the template page from the following field.",
@@ -20,5 +20,11 @@
   "srwste-template-name": "Template name",
   "srwste-items": "Items",
   "srwste-generate": "Generate",
-  "srwste-output-section": "== Output =="
+  "srwste-output-section": "== Output ==",
+  "srwste-template-source-section": "=== Source of the template ===",
+  "srwste-replace-source-with": "Replace the source of \"$1\" with the following:",
+  "srwste-sources-for-documentation-section": "=== Sources for the documentation ===",
+  "srwste-paste-into": "Paste the following sources into \"$1\":",
+  "srwste-source-for-usage": "Source for the usage",
+  "srwste-source-for-boilerplate": "Source for the boilerplate"
 }

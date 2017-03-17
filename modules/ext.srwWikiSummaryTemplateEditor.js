@@ -15,17 +15,7 @@
     };
 
     ns.templatePrototype = {
-      getHeader: function getHeader() {
-        return '<includeonly>{{Infobox\n' +
-          '| name = ' + this.name + '\n' +
-          '| aboveclass = infobox-above\n' +
-          '| above = {{{タイトル|{{PAGENAME}}}}}\n' +
-          '| image = {{#invoke:InfoboxImage|InfoboxImage|image={{{image|}}}|size={{{image_size|}}}|sizedefault=frameless|upright=1.15|alt={{{alt|}}}}}\n' +
-          '| caption = {{{キャプション|}}}\n' +
-          '| rowclass = infobox-row';
-      },
-
-      getBody: function getBody(itemGroups) {
+      setItems: function setItems(itemGroups) {
         var
           last,
           itemGroupOffsetPairs = itemGroups.map(function (items, index) {
@@ -46,40 +36,100 @@
             };
 
             return last;
-          }),
-          items = itemGroupOffsetPairs.
-            map(function (pair) {
-              return pair.items.map(function (itemSource, i) {
-                var
-                  index = pair.offset + i,
-                  labelDataPair = itemSource.split(',', 2);
+          });
 
-                if (labelDataPair.length === 1) {
-                  return ns.newItem(index, labelDataPair[0], labelDataPair[0]);
-                }
+        this.items = itemGroupOffsetPairs.
+          map(function (pair) {
+            return pair.items.map(function (itemSource, i) {
+              var
+                index = pair.offset + i,
+                labelDataPair = itemSource.split(',', 2);
 
-                return ns.newItem(index, labelDataPair[1], labelDataPair[0]);
-              });
-            }).
-            reduce(function (acc, itemGroup) {
-              return acc.concat(itemGroup);
-            }, []);
+              if (labelDataPair.length === 1) {
+                return ns.newItem(index, labelDataPair[0], labelDataPair[0]);
+              }
 
-        return items.map(function (item) {
+              return ns.newItem(index, labelDataPair[1], labelDataPair[0]);
+            });
+          }).
+          reduce(function (acc, itemGroup) {
+            return acc.concat(itemGroup);
+          }, []);
+      },
+
+      getHeaderOfTemplateSource: function getHeaderOfTemplateSource() {
+        return '<includeonly>{{Infobox\n' +
+          '| name = ' + this.name + '\n' +
+          '| aboveclass = infobox-above\n' +
+          '| above = {{{タイトル|{{PAGENAME}}}}}\n' +
+          '| image = {{#invoke:InfoboxImage|InfoboxImage|image={{{image|}}}|size={{{image_size|}}}|sizedefault=frameless|upright=1.15|alt={{{alt|}}}}}\n' +
+          '| caption = {{{キャプション|}}}\n' +
+          '| rowclass = infobox-row';
+      },
+
+      getBodyOfTemplateSource: function getBodyOfTemplateSource() {
+        return this.items.map(function (item) {
           return item.getMarkup();
         }).join('\n');
       },
 
-      getFooter: function getFooter() {
+      getFooterOfTemplateSource: function getFooterOfTemplateSource() {
         return '}}</includeonly><noinclude>\n' +
           '{{Documentation}}</noinclude>';
+      },
+
+      getTemplateSource: function getTemplateSource() {
+        var
+          lines = [
+            this.getHeaderOfTemplateSource(),
+            this.getBodyOfTemplateSource(),
+            this.getFooterOfTemplateSource()
+          ];
+
+        return lines.join('\n');
+      },
+
+      getSourceForUsage: function getSourceForUsage() {
+        var
+          templateStart = '{{' + this.name,
+          templateEnd = '}}',
+
+          header = [templateStart],
+          footer = [templateEnd],
+          body = this.items.map(function (item) {
+            return '| ' + item.data + ' = ' + item.data;
+          }),
+
+          lines = header.concat(body).concat(footer);
+
+        return lines.join('\n');
+      },
+
+      getSourceForBoilerplate: function getSourceForBoilerplate() {
+        var
+          preStart = '<pre>',
+          templateStart = '{{' + this.name,
+          templateEnd = '}}',
+          preEnd = '</pre>',
+
+          header = [preStart, templateStart],
+          footer = [templateEnd, preEnd],
+          body = this.items.map(function (item) {
+            return '| ' + item.data + ' = ';
+          }),
+
+          lines = header.concat(body).concat(footer);
+
+        return lines.join('\n');
       }
     };
 
-    ns.newTemplate = function newTemplate(name) {
+    ns.newTemplate = function newTemplate(name, itemGroups) {
       var o = Object.create(ns.templatePrototype);
 
       o.name = name;
+
+      o.setItems(itemGroups);
 
       return o;
     };
@@ -134,21 +184,20 @@
       $templateName = $('#srwste-template-name'),
       $items = $('#srwste-items'),
       $generate = $('#srwste-generate'),
-      $output = $('#srwste-output');
+      $templateSource = $('#srwste-template-source'),
+      $sourceForUsage = $('#srwste-source-for-usage'),
+      $sourceForBoilerplate = $('#srwste-source-for-boilerplate');
 
     $generate.click(function generateOnSubmit(ev) {
       var
-        template = mw.srwWikiSummaryTemplateEditor.
-          newTemplate($templateName.val()),
         itemGroups = mw.srwWikiSummaryTemplateEditor.
           getItemGroups($items.text()),
-        lines = [
-          template.getHeader(),
-          template.getBody(itemGroups),
-          template.getFooter()
-        ];
+        template = mw.srwWikiSummaryTemplateEditor.
+          newTemplate($templateName.val(), itemGroups);
 
-      $output.text(lines.join('\n'));
+      $templateSource.text(template.getTemplateSource());
+      $sourceForUsage.text(template.getSourceForUsage());
+      $sourceForBoilerplate.text(template.getSourceForBoilerplate());
 
       ev.preventDefault();
     });

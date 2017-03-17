@@ -10,12 +10,15 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
 
   /**
    * 特別ページのグループ名を返す。
-   * @return string
+   * @return string 「データとツール」のグループ。
    */
   protected function getGroupName() {
     return 'wiki';
   }
 
+  /**
+   * 特別ページの表示処理。
+   */
   public function execute($par) {
     $request = $this->getRequest();
     $query = $request->getQueryValues();
@@ -60,15 +63,29 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
 
     $output->addWikiMsg('srwste-output-section');
 
-    $outputForm = $this->createOutputForm();
-    $outputForm->show();
+    $output->addWikiMsg('srwste-template-source-section');
+
+    if ($summaryTemplate !== null) {
+      $output->addWikiMsg('srwste-replace-source-with', "[[{$templatePageToLoad}]]");
+    }
+
+    $templateSourceForm = $this->createTemplateSourceForm();
+    $templateSourceForm->show();
+
+    $output->addWikiMsg('srwste-sources-for-documentation-section');
+
+    if ($summaryTemplate !== null) {
+      $output->addWikiMsg('srwste-paste-into', "[[{$templatePageToLoad}/doc]]");
+    }
+
+    $sourcesForDocumentationForm = $this->createSourcesForDocumentationForm();
+    $sourcesForDocumentationForm->show();
   }
 
   /**
    * テンプレートのソースを取得する。
    * @param string $templateName テンプレート名。
-   * @return string テンプレートのソース。
-   * @return null テンプレートのソースを取得できなかった場合。
+   * @return string|null テンプレートのソース。取得できなかった場合はnullになる。
    */
   private function getTemplateSource($templateName) {
     if (!$templateName) {
@@ -97,6 +114,10 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
     }
   }
 
+  /**
+   * テンプレート読み込みフォームを作成する。
+   * @return HTMLForm
+   */
   private function createLoadTemplateForm() {
     $category = Category::newFromName('概要テンプレート');
     $pageTitles = $category->getMembers();
@@ -132,6 +153,10 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
     return $form;
   }
 
+  /**
+   * 項目入力フォームを作成する。
+   * @return HTMLForm
+   */
   private function createInputForm($summaryTemplate = null) {
     $formDescriptor = [
       'template-name' => [
@@ -158,13 +183,44 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
     return $form;
   }
 
-  private function createOutputForm() {
+  /**
+   * テンプレートのソースのフォームを作成する。
+   * @return HTMLForm
+   */
+  private function createTemplateSourceForm() {
     $formDescriptor = [
-      'output' => [
-        'id' => 'srwste-output',
+      'template-source' => [
+        'id' => 'srwste-template-source',
+        'type' => 'textarea',
+        'readonly' => true
+      ]
+    ];
+
+    $form = new HTMLForm($formDescriptor, $this->getContext());
+    $form->setDisplayFormat('div');
+    $form->setSubmitCallback(function ($data, $formArg) { return false; });
+    $form->suppressDefaultSubmit();
+
+    return $form;
+  }
+
+  /**
+   * 解説用のソースのフォームを作成する。
+   * @return HTMLForm
+   */
+  private function createSourcesForDocumentationForm() {
+    $formDescriptor = [
+      'source-for-usage' => [
+        'id' => 'srwste-source-for-usage',
         'type' => 'textarea',
         'readonly' => true,
-        'class' => 'HTMLTextAreaField'
+        'label-message' => 'srwste-source-for-usage'
+      ],
+      'source-for-boilerplate' => [
+        'id' => 'srwste-source-for-boilerplate',
+        'type' => 'textarea',
+        'readonly' => true,
+        'label-message' => 'srwste-source-for-boilerplate'
       ]
     ];
 

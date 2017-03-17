@@ -7,7 +7,7 @@
   "srwwikisummarytemplateeditor-extensionname": "スーパーロボット大戦Wiki 概要テンプレートエディタ",
   "srwwikisummarytemplateeditor-desc": "スーパーロボット大戦Wikiの概要テンプレートの編集を支援します。",
   "summarytemplateeditor": "概要テンプレートエディタ",
-  "summarytemplateeditor-summary": "このページでは、概要テンプレートのウィキマークアップを簡単に生成することができます。",
+  "summarytemplateeditor-summary": "このページでは、[[:Category:概要テンプレート|概要テンプレート]]のソースを簡単に生成することができます。",
   "srwste-input-section": "== 入力 ==",
   "srwste-load-template-section": "=== 既存のテンプレートの読み込み ===",
   "srwste-load-template-description": "既存のテンプレートを編集するには、以下の欄からテンプレートページを選択してください。",
@@ -20,5 +20,11 @@
   "srwste-template-name": "テンプレート名",
   "srwste-items": "項目",
   "srwste-generate": "生成",
-  "srwste-output-section": "== 出力 =="
+  "srwste-output-section": "== 出力 ==",
+  "srwste-template-source-section": "=== テンプレートのソース ===",
+  "srwste-replace-source-with": "「$1」のソースを以下のものに置き換えてください：",
+  "srwste-sources-for-documentation-section": "=== 解説用のソース ===",
+  "srwste-paste-into": "「$1」に以下のソースを貼り付けてください：",
+  "srwste-source-for-usage": "使い方のソース",
+  "srwste-source-for-boilerplate": "雛形のソース"
 }
