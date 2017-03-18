@@ -1,32 +1,53 @@
 <?php
 
 /**
- * 概要テンプレートを表すクラス。
+ * @brief 概要テンプレートを表すクラス。
  *
  * テンプレートには名前と項目を設定することができる。
  */
 class SrwSummaryTemplate {
-
+  /** @brief テンプレート名。 */
   private $nameProp;
+  /** @brief 項目の配列。 */
   private $items;
 
+  /**
+   * @brief コンストラクタ。
+   * @param string $name テンプレート名。
+   */
   public function __construct($name) {
     $this->nameProp = $name;
     $this->items = [];
   }
 
+  /**
+   * @brief テンプレート名を取得する。
+   * @return string テンプレート名。
+   */
   public function getName() {
     return $this->nameProp;
   }
 
+  /**
+   * @brief 文字列に変換する。
+   * @return string テンプレートの文字列表現。
+   */
   public function __toString() {
     return $this->nameProp;
   }
 
+  /**
+   * @brief 項目を追加する。
+   * @param SrwSummaryTemplateItem $item 追加する項目。
+   */
   public function addItem(SrwSummaryTemplateItem $item) {
     $this->items[] = $item;
   }
 
+  /**
+   * @brief 項目の一覧をソースに変換する。
+   * @return string 項目の一覧のソース。
+   */
   public function itemsToSource() {
     if (count($this->items) <= 0) {
       return '';

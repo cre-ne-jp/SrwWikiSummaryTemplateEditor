@@ -1,15 +1,18 @@
 <?php
 
 /**
- * 概要テンプレートエディタの特別ページ。
+ * @brief 概要テンプレートエディタの特別ページ。
  */
 class SpecialSummaryTemplateEditor extends SpecialPage {
+  /**
+   * @brief コンストラクタ。
+   */
   function __construct() {
     parent::__construct('SummaryTemplateEditor');
   }
 
   /**
-   * 特別ページのグループ名を返す。
+   * @brief 特別ページのグループ名を返す。
    * @return string 「データとツール」のグループ。
    */
   protected function getGroupName() {
@@ -17,13 +20,18 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
   }
 
   /**
-   * 特別ページの表示処理。
+   * @brief 特別ページの表示処理。
    */
   public function execute($par) {
     $request = $this->getRequest();
     $query = $request->getQueryValues();
     $output = $this->getOutput();
 
+    // テンプレートの読み込み
+    //
+    // クエリパラメータで読み込むテンプレートが指定されていれば
+    // 読み込みを試みる。
+    // 読み込みができたらソースを解析し、入力欄に表示できるように準備する。
     $templatePageToLoad = $query['wptemplate-page-to-load'] ?: null;
     $templateSource = $templatePageToLoad ?
       $this->getTemplateSource($templatePageToLoad) : null;
@@ -39,20 +47,24 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
       }
     }
 
+    // 特別ページの表示開始
     $this->setHeaders();
 
     $output->addModules('ext.srwWikiSummaryTemplateEditor');
 
     $output->addWikiMsg('summarytemplateeditor-summary');
 
+    // == 入力 ==
     $output->addWikiMsg('srwste-input-section');
 
+    // === 既存のテンプレートの読み込み ===
     $output->addWikiMsg('srwste-load-template-section');
     $output->addWikiMsg('srwste-load-template-description');
 
     $loadTemplateForm = $this->createLoadTemplateForm();
     $loadTemplateForm->show();
 
+    // === 項目の一覧 ===
     $output->addWikiMsg('srwste-item-list-section');
     $output->addWikiMsg('srwste-enter-items');
     $output->addWikiMsg('srwste-item-format');
@@ -61,20 +73,26 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
     $itemListForm = $this->createInputForm($summaryTemplate);
     $itemListForm->show();
 
+    // == 出力 ==
     $output->addWikiMsg('srwste-output-section');
 
+    // === テンプレートのソース ===
     $output->addWikiMsg('srwste-template-source-section');
 
     if ($summaryTemplate !== null) {
+      // 既存のテンプレートを読み込めた場合は、そのテンプレートへのリンクを表示する
       $output->addWikiMsg('srwste-replace-source-with', "[[{$templatePageToLoad}]]");
     }
 
     $templateSourceForm = $this->createTemplateSourceForm();
     $templateSourceForm->show();
 
+    // === 解説用のソース ===
     $output->addWikiMsg('srwste-sources-for-documentation-section');
 
     if ($summaryTemplate !== null) {
+      // 既存のテンプレートを読み込めた場合は、そのテンプレートの解説ページ
+      // へのリンクを表示する
       $output->addWikiMsg('srwste-paste-into', "[[{$templatePageToLoad}/doc]]");
     }
 
@@ -83,7 +101,7 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
   }
 
   /**
-   * テンプレートのソースを取得する。
+   * @brief テンプレートのソースを取得する。
    * @param string $templateName テンプレート名。
    * @return string|null テンプレートのソース。取得できなかった場合はnullになる。
    */
@@ -115,22 +133,30 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
   }
 
   /**
-   * テンプレート読み込みフォームを作成する。
-   * @return HTMLForm
+   * @brief テンプレートページ選択欄の項目を作成する。
+   * @return array テンプレートページ選択欄の項目の連想配列。
    */
-  private function createLoadTemplateForm() {
+  private function createTemplateSelectorOptions() {
     $category = Category::newFromName('概要テンプレート');
     $pageTitles = $category->getMembers();
+
     $templateSelectorOptions = [];
-    $firstTemplateTitle = null;
     foreach ($pageTitles as $title) {
       $titleText = $title->getFullText();
       $templateSelectorOptions[$titleText] = $titleText;
-
-      if ($firstTemplateTitle === null) {
-        $firstTemplateTitle = $titleText;
-      }
     }
+
+    return $templateSelectorOptions;
+  }
+
+  /**
+   * @brief テンプレート読み込みフォームを作成する。
+   * @return HTMLForm
+   */
+  private function createLoadTemplateForm() {
+    $templateSelectorOptions = $this->createTemplateSelectorOptions();
+    $firstTemplateTitle = empty($templateSelectorOptions) ?
+      null : $templateSelectorOptions[0];
 
     $formDescriptor = [
       'template-page-to-load' => [
@@ -154,7 +180,7 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
   }
 
   /**
-   * 項目入力フォームを作成する。
+   * @brief 項目入力フォームを作成する。
    * @return HTMLForm
    */
   private function createInputForm($summaryTemplate = null) {
@@ -184,7 +210,7 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
   }
 
   /**
-   * テンプレートのソースのフォームを作成する。
+   * @brief テンプレートのソースのフォームを作成する。
    * @return HTMLForm
    */
   private function createTemplateSourceForm() {
@@ -205,7 +231,7 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
   }
 
   /**
-   * 解説用のソースのフォームを作成する。
+   * @brief 解説用のソースのフォームを作成する。
    * @return HTMLForm
    */
   private function createSourcesForDocumentationForm() {

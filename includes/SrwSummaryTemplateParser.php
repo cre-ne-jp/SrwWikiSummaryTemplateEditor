@@ -1,15 +1,24 @@
 <?php
 
 /**
- * 概要テンプレートの解析器。
+ * @brief 概要テンプレートの解析器。
  */
 class SrwSummaryTemplateParser {
+  /** @brief テンプレートのソース。 */
   private $source;
 
+  /**
+   * @brief コンストラクタ。
+   * @param string $source テンプレートのソース。
+   */
   public function __construct($source) {
     $this->source = $source;
   }
 
+  /**
+   * @brief テンプレートのソースを解析し、テンプレートのインスタンスに変換する。
+   * @return SrwSummaryTemplate|null テンプレートのインスタンス。変換に失敗した場合はnull。
+   */
   public function parse() {
     if (!$this->source) {
       return null;
@@ -43,6 +52,11 @@ class SrwSummaryTemplateParser {
     }
   }
 
+  /**
+   * @brief テンプレートのノードを抽出する。
+   * @param DOMXPath $xpath XPathオブジェクト。
+   * @return DOMNode|null テンプレートのノード。見つからなかった場合はnull。
+   */
   private function extractSummaryTemplateNode(DOMXPath $xpath) {
     $templateNodes = $xpath->query('template');
     foreach ($templateNodes as $templateNode) {
@@ -57,6 +71,12 @@ class SrwSummaryTemplateParser {
     return null;
   }
 
+  /**
+   * @brief テンプレートのパラメータを抽出する。
+   * @param DOMNode $templateNode テンプレートのノード。
+   * @param DOMXPath $xpath XPathオブジェクト。
+   * @return array テンプレートのパラメータの連想配列。
+   */
   private function extractTemplateParams(DOMNode $templateNode, DOMXPath $xpath) {
     $params = [];
 
@@ -73,6 +93,15 @@ class SrwSummaryTemplateParser {
     return $params;
   }
 
+  /**
+   * @brief 概要テンプレートに項目を追加する。
+   *
+   * labelN、dataNという名前のパラメータを探し、それを項目のインスタンスに
+   * 変換してテンプレートに追加する。
+   *
+   * @param SrwSummaryTemplate $template 概要テンプレート。
+   * @param array $params テンプレートのパラメータの連想配列。
+   */
   private function addItemsTo($template, $params) {
     foreach ($params as $key => $value) {
       $matches = [];

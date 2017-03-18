@@ -26,8 +26,8 @@ wfLoadExtension('SrwWikiSummaryTemplateEditor');
 
 ## ライセンス
 
-[MIT License](LICENSE)
+[MIT License](./LICENSE)
 
 ## 制作
 
-&copy; ocha（[@ochaochaocha3](https://github.com/ochaochaocha3)）
+&copy; ocha（[&commat;ochaochaocha3](https://github.com/ochaochaocha3)）
