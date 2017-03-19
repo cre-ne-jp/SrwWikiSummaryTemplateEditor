@@ -134,19 +134,25 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
 
   /**
    * @brief テンプレートページ選択欄の項目を作成する。
-   * @return array テンプレートページ選択欄の項目の連想配列。
+   * @return array テンプレートページ選択欄の項目の連想配列,
+   *   最初のテンプレートの名前。
    */
-  private function createTemplateSelectorOptions() {
+  private function createTemplatePageSelectorOptions() {
     $category = Category::newFromName('概要テンプレート');
     $pageTitles = $category->getMembers();
 
-    $templateSelectorOptions = [];
+    $firstTemplatePage = null;
+    $templatePageSelectorOptions = [];
     foreach ($pageTitles as $title) {
       $titleText = $title->getFullText();
-      $templateSelectorOptions[$titleText] = $titleText;
+      $templatePageSelectorOptions[$titleText] = $titleText;
+
+      if ($firstTemplatePage === null) {
+        $firstTemplatePage = $titleText;
+      }
     }
 
-    return $templateSelectorOptions;
+    return [$templatePageSelectorOptions, $firstTemplatePage];
   }
 
   /**
@@ -154,21 +160,20 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
    * @return HTMLForm
    */
   private function createLoadTemplateForm() {
-    $templateSelectorOptions = $this->createTemplateSelectorOptions();
-    $firstTemplateTitle = empty($templateSelectorOptions) ?
-      null : $templateSelectorOptions[0];
+    list($templatePageSelectorOptions, $firstTemplatePage) =
+      $this->createTemplatePageSelectorOptions();
 
     $formDescriptor = [
       'template-page-to-load' => [
         'type' => 'select',
         'label-message' => 'srwste-template-page',
-        'options' => $templateSelectorOptions
+        'options' => $templatePageSelectorOptions
       ]
     ];
 
-    if ($firstTemplateTitle !== null) {
+    if ($firstTemplatePage !== null) {
       $formDescriptor['template-page-to-load']['default'] =
-        $firstTemplateTitle;
+        $firstTemplatePage;
     }
 
     $form = new HTMLForm($formDescriptor, $this->getContext());
