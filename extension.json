@@ -28,12 +28,12 @@
     "SummaryTemplateEditorAlias": "i18n/SummaryTemplateEditor.i18n.alias.php"
   },
   "ResourceModules": {
-    "ext.srwWikiSummaryTemplateEditor": {
-      "dependencies": [
-        "mediawiki.jqueryMsg"
-      ],
+    "srwste": {
       "scripts": [
-        "modules/ext.srwWikiSummaryTemplateEditor.js"
+        "modules/srwste.namespace.js",
+        "modules/srwste.Item.js",
+        "modules/srwste.Template.js",
+        "modules/srwste.ui.js"
       ]
     }
   },
