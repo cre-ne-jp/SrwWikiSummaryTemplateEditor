@@ -24,7 +24,7 @@ class SrwSummaryTemplateParser {
       return null;
     }
 
-    $parser = new Parser();
+    $parser = new Parser(['preprocessorClass' => 'Preprocessor_DOM']);
     $parser->mOptions = new ParserOptions();
 
     try {
