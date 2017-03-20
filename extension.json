@@ -28,12 +28,12 @@
     "SummaryTemplateEditorAlias": "i18n/SummaryTemplateEditor.i18n.alias.php"
   },
   "ResourceModules": {
-    "srwste": {
+    "ext.srwste": {
       "scripts": [
-        "modules/srwste.namespace.js",
-        "modules/srwste.Item.js",
-        "modules/srwste.Template.js",
-        "modules/srwste.ui.js"
+        "modules/ext.srwste.namespace.js",
+        "modules/ext.srwste.Item.js",
+        "modules/ext.srwste.Template.js",
+        "modules/ext.srwste.ui.js"
       ]
     }
   },

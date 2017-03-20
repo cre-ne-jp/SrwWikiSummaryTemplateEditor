@@ -50,7 +50,7 @@ class SpecialSummaryTemplateEditor extends SpecialPage {
     // 特別ページの表示開始
     $this->setHeaders();
 
-    $output->addModules('ext.srwWikiSummaryTemplateEditor');
+    $output->addModules('ext.srwste');
 
     $output->addWikiMsg('summarytemplateeditor-summary');
 
