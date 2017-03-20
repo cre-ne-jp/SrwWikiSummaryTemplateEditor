@@ -5,7 +5,7 @@
 
   /**
    * 項目一覧のソースから項目グループに変換する。
-   * @param {string} 項目一覧のソース。
+   * @param {string} source 項目一覧のソース。
    * @return {Array} 項目グループの配列。
    */
   srwste.toItemGroups = function getItemGroups(source) {
