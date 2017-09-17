@@ -53,12 +53,12 @@
 
     $generate.click(function generateOnSubmit(ev) {
       var
-        itemGroups = srwste.toItemGroups($items.text()),
+        itemGroups = srwste.toItemGroups($items.val()),
         template = new srwste.Template($templateName.val(), itemGroups);
 
-      $templateSource.text(template.getTemplateSource());
-      $sourceForUsage.text(template.getSourceForUsage());
-      $sourceForBoilerplate.text(template.getSourceForBoilerplate());
+      $templateSource.val(template.getTemplateSource());
+      $sourceForUsage.val(template.getSourceForUsage());
+      $sourceForBoilerplate.val(template.getSourceForBoilerplate());
 
       ev.preventDefault();
     });
